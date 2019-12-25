@@ -903,9 +903,10 @@ var DefaultExternalServices = {
   initPassiveLoading: function initPassiveLoading(callbacks) {},
   fallback: function fallback(data, callback) {},
   reportTelemetry: function reportTelemetry(data) {},
-  createDownloadManager: function createDownloadManager() {
+ /* createDownloadManager: function createDownloadManager() {
     throw new Error('Not implemented: createDownloadManager');
-  },
+  }
+  ,*/
   createPreferences: function createPreferences() {
     throw new Error('Not implemented: createPreferences');
   },
@@ -942,7 +943,7 @@ var PDFViewerApplication = {
   pdfAttachmentViewer: null,
   pdfCursorTools: null,
   store: null,
-  downloadManager: null,
+  //downloadManager: null,
   overlayManager: null,
   preferences: null,
   toolbar: null,
@@ -950,7 +951,7 @@ var PDFViewerApplication = {
   eventBus: null,
   l10n: null,
   isInitialViewSet: false,
-  downloadComplete: false,
+  //downloadComplete: false,
   viewerPrefs: {
     sidebarViewOnLoad: _pdf_sidebar.SidebarView.NONE,
     pdfBugEnabled: false,
@@ -1074,8 +1075,8 @@ var PDFViewerApplication = {
       _this2.pdfRenderingQueue = pdfRenderingQueue;
       var pdfLinkService = new _pdf_link_service.PDFLinkService({ eventBus: eventBus });
       _this2.pdfLinkService = pdfLinkService;
-      var downloadManager = _this2.externalServices.createDownloadManager();
-      _this2.downloadManager = downloadManager;
+    //  var downloadManager = _this2.externalServices.createDownloadManager();
+  //    _this2.downloadManager = downloadManager;
       var container = appConfig.mainContainer;
       var viewer = appConfig.viewerContainer;
       _this2.pdfViewer = new _pdf_viewer.PDFViewer({
@@ -1084,7 +1085,7 @@ var PDFViewerApplication = {
         eventBus: eventBus,
         renderingQueue: pdfRenderingQueue,
         linkService: pdfLinkService,
-        downloadManager: downloadManager,
+      //  downloadManager: downloadManager,
         renderer: _this2.viewerPrefs['renderer'],
         l10n: _this2.l10n,
         enhanceTextSelection: _this2.viewerPrefs['enhanceTextSelection'],
@@ -1154,7 +1155,7 @@ var PDFViewerApplication = {
       _this2.pdfAttachmentViewer = new _pdf_attachment_viewer.PDFAttachmentViewer({
         container: appConfig.sidebar.attachmentsView,
         eventBus: eventBus,
-        downloadManager: downloadManager
+      //  downloadManager: downloadManager
       });
       var sidebarConfig = Object.create(appConfig.sidebar);
       sidebarConfig.pdfViewer = _this2.pdfViewer;
@@ -1273,7 +1274,7 @@ var PDFViewerApplication = {
     }
     this.store = null;
     this.isInitialViewSet = false;
-    this.downloadComplete = false;
+ //   this.downloadComplete = false;
     this.pdfSidebar.reset();
     this.pdfOutlineViewer.reset();
     this.pdfAttachmentViewer.reset();
@@ -1353,6 +1354,7 @@ var PDFViewerApplication = {
       });
     });
   },
+  /*
   download: function download() {
     var _this4 = this;
 
@@ -1373,7 +1375,8 @@ var PDFViewerApplication = {
       var blob = (0, _pdfjsLib.createBlob)(data, 'application/pdf');
       downloadManager.download(blob, url, filename);
     }).catch(downloadByUrl);
-  },
+  }
+  ,*/
   fallback: function fallback(featureId) {},
   error: function error(message, moreInfo) {
     var moreInfoText = [this.l10n.get('error_version_info', {
@@ -1809,8 +1812,8 @@ var PDFViewerApplication = {
     eventBus.off('presentationmodechanged', webViewerPresentationModeChanged);
     eventBus.off('presentationmode', webViewerPresentationMode);
     eventBus.off('openfile', webViewerOpenFile);
-    eventBus.off('print', webViewerPrint);
-    eventBus.off('download', webViewerDownload);
+   // eventBus.off('print', webViewerPrint);
+   // eventBus.off('download', webViewerDownload);
     eventBus.off('firstpage', webViewerFirstPage);
     eventBus.off('lastpage', webViewerLastPage);
     eventBus.off('nextpage', webViewerNextPage);

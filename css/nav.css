@@ -1,0 +1,71 @@
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background: -webkit-linear-gradient(to right, #E2E2E2, rgb(240, 242, 247));  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #E2E2E2, rgb(255, 255, 255)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #ffffff;
+    display: block;
+    transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+.view_nav{
+    display:none;
+}
+.Nav_top_view_full_screen{
+    display:grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    grid-template-rows:auto ;
+    -webkit-text-fill-color: white;
+}
+
+@media screen and (min-width: 600px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+
+  }
+  .view_nav{
+      display:block;
+      color: rgb(0, 0, 0);   
+  }
+  .Nav_top_view_full_screen{
+    display:none;
+  }
+  .right_nav{
+      justify-self: right;
+  }
+  
+}

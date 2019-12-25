@@ -1,0 +1,173 @@
+body{
+    margin-left:8vw;
+    margin-right:8vw;
+}
+.container{
+    display:grid;
+    grid-template-columns:auto;
+    grid-template-rows:4em 1fr 0.2fr;
+   grid-row-gap: 10px;
+ 
+}
+.header_ebook_holder{
+    display:grid;
+    grid-template-columns:4em auto;
+    grid-template-rows:auto;
+    border-bottom: 1px solid;
+    
+}
+
+.header_item2{
+    justify-self: right;
+    justify-content:center;
+    align-items:stretch;
+
+}
+.ebook_item1{
+    display: grid;
+    grid-row-gap:1em;
+}
+
+ 
+
+.content_ebook_holder{
+    display:grid;
+    grid-template-rows:auto auto;
+}
+.ebook_item2{
+    display:grid;
+    grid-template-rows:auto;
+
+}
+.ebook_sticky_item2{
+    display:grid;
+    height:30em;
+    width:auto;
+    top:5em;
+    right: 0;
+    margin-top:3em;
+    background-color: aliceblue;
+    padding-top: 5px;
+    margin-left: 2em;
+    grid-template-rows:auto;
+}
+.search_bar{
+   justify-self: right;
+   position: sticky;
+   top:5px;
+      
+     
+}
+.footer_ebook_holder{
+    display:grid;
+    grid-template-rows:auto;
+}
+
+
+p {
+    margin: 22px 0;
+    font-size: 15px;
+    line-height: 20px;
+    color: #666;
+    margin-left: 1em;
+    font-family: "HeiS ASC Simplified Chinese","HeiS ASC Simplified Chinese_n5","HeiT ASC Traditional Chinese","HelveticaNeue-Regular","Helvetica Neue Regular","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+h2 {
+    margin-top: 0;
+    color: #666;
+    margin: 30px 0 15px;
+    font-family: Gotham Light,"M Hei PRC W45","M Hei HK W42","M Hei HK W40","HelveticaNeue-Regular","Helvetica Neue Regular","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 24px;
+}
+h3{
+    color: rgb(22, 21, 21);
+    font-family: Gotham Light,"M Hei PRC W45","M Hei HK W42","M Hei HK W40","HelveticaNeue-Regular","Helvetica Neue Regular","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 21px;
+}
+h1{
+    font-size: 20px;
+}
+
+a{
+    -webkit-text-fill-color: red;
+    text-decoration: none;
+    margin-left: 1em;
+}
+
+.nav_viewer{
+    display:grid;
+    grid-template-rows:auto;
+    padding:1em;
+    grid-template-columns:auto auto;
+    widows: 100%;
+    height:auto;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1px;
+    font-size: 15px;
+ }
+
+ .data_holder{
+     width: 100%;
+     height:8em;
+     background-color: rgb(230, 235, 240); 
+     display:grid;
+     grid-template-rows:auto auto auto auto;
+     padding:1em;
+ }
+ .read_ebook{
+     justify-self: right;
+ }
+ .pdf_view{
+    display:grid;
+    padding:1em;
+    grid-column-gap: 1em;
+    grid-template-columns:3fr 1.4fr;
+ }
+@media screen and (max-width: 600px) {
+    .ebook_sticky_item2{
+        display: none;
+    }
+    .left_nav{
+       display: none;
+    
+    }
+    p {
+        margin: 22px 0;
+        font-size: 12px;
+        line-height: 16px;
+    }
+    
+    h2 {
+      
+       
+        font-size: 18px;
+        line-height: 20px;
+    }
+    h3{
+      
+        font-size: 15px;
+        line-height: 17px;
+    }
+    .content_ebook_holder{
+        display:grid;
+        grid-template-columns:auto;
+        grid-template-rows:auto;
+    }
+    h1{
+        font-size: 15px;
+    }
+    
+    
+}
+
+#item_view_holder{
+     display: grid;
+     grid-template-columns:auto auto auto; 
+     grid-template-rows: auto;
+}
+

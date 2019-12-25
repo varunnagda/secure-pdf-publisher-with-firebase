@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase.js"></script>
+        <script src="js/firebase_config.js"  type="text/javascript"></script>
+
+<script>
+
+      
+
+   /*     function add_new() {
+            var d=document.getElementById("newcategory");
+d.innerHTML+="<input type='text' name='food'>";
+} 
+*/
+        </script>
+<style>
+* {
+    box-sizing: border-box;
+}
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+}
+
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .col-25, .col-75, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+}
+</style>
+</head>
+<body>
+
+<h2>Upload pdf</h2>
+
+<div class="container">
+    <div class="row">
+      <div class="col-25">
+        <label for="fname">File Name</label>
+      </div>
+      <div class="col-75">
+    
+        <input type="text" id="file_name" name="filename" placeholder="File Name..">
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-25">
+          <label for="subject">Description</label>
+        </div>
+        <div class="col-75">
+          <textarea id="description_box" name="description" placeholder="Write something.." style="height:200px"></textarea>
+        </div>
+      </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="country">Select file</label>
+      </div>
+      <div class="col-75">
+            <progress value="0" max="100" id="uploader">0%</progress>
+            <input type="file" value="upload" accept=".pdf" id="fileButton">
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-25">
+          <label for="lname">Category</label>
+        </div>
+        <div class="col-75" id="newcategory">
+            <input type="text" id="category" name="filename" placeholder="File Name..">
+                
+            </div>
+      </div>
+   
+    <div class="row">
+      <input type="submit" value="Submit" onclick="file_upload()">
+    </div>
+
+</div>
+
+
+           <script> 
+             
+            firebase.initializeApp(config);
+           
+            var downloadURL;
+        /*    var category_details_edit_loader;
+            var file_name_edit;
+            var url_edit;
+            var  description_edit; */
+            var cat_split_edit;
+            var cat_id_ref=document.getElementById("category");
+           // get elements
+            var uploader = document.getElementById('uploader');
+            var fileButton = document.getElementById('fileButton');
+            var session_pdf_key=sessionStorage.getItem("pdf_key");
+            var session_pdf_description=sessionStorage.getItem("description_session");
+            var session_pdf_file_name=sessionStorage.getItem("file_name_session");
+            var session_pdf_category=sessionStorage.getItem("category_session");
+            var session_pdf_url=sessionStorage.getItem("url_session");
+            console.log(session_pdf_key+session_pdf_description+session_pdf_category+session_pdf_file_name);
+            if(session_pdf_key!=null)
+            {
+         
+     downloadURL=session_pdf_url;
+     document.getElementById("file_name").value =session_pdf_file_name;
+     document.getElementById("description_box").value =session_pdf_description;
+     cat_id_ref.value =session_pdf_category;
+
+    
+
+
+            }
+            // listen for file selection
+            fileButton.addEventListener('change', function (e) {
+                // what happened
+                console.log('file upload event', e);
+                // get file
+                var file = e.target.files[0];
+                var fbBucketName = 'pdf';
+
+var storageRef= firebase.storage().ref('pdf/'+file.name);
+       var uploadTask = storageRef.put(file);
+			// The part below is largely copy-pasted from the 'Full Example' section from
+			// https://firebase.google.com/docs/storage/web/upload-files
+			// update progress bar
+			uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+				function (snapshot) {
+					// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+					var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+					uploader.value = progress;
+					console.log('Upload is ' + progress + '% done');
+					switch (snapshot.state) {
+						case firebase.storage.TaskState.PAUSED: // or 'paused'
+							console.log('Upload is paused');
+							break;
+						case firebase.storage.TaskState.RUNNING: // or 'running'
+							console.log('Upload is running');
+							break;
+					}
+				}, function (error) {
+					// A full list of error codes is available at
+					// https://firebase.google.com/docs/storage/web/handle-errors
+					switch (error.code) {
+						case 'storage/unauthorized':
+							// User doesn't have permission to access the object
+							break;
+						case 'storage/canceled':
+							// User canceled the upload
+							break;
+						case 'storage/unknown':
+							// Unknown error occurred, inspect error.serverResponse
+							break;
+					}
+				}, function () {
+					// Upload completed successfully, now we can get the download URL
+					// save this link somewhere, e.g. put it in an input field
+                    downloadURL=uploadTask.snapshot.ref.getDownloadURL()
+                        console.log('File available at', downloadURL);
+
+                  
+				});
+
+
+
+            });
+
+
+
+
+            var database = firebase.database();
+
+        function file_upload()
+{
+   var fn= document.getElementById("file_name").value;
+    if(session_pdf_key!=null && fn!=""){
+  var session_pdf_category_split=sessionStorage.getItem("category_session");
+        var  cat_split_session=session_pdf_category_split.split(',');
+    RemoveRef_PDF = firebase.database().ref('ebooks/'+session_pdf_key);  
+RemoveRef_PDF.remove();
+for(var x=0;x<cat_split_edit.length;x++){
+   
+  
+
+RemoveRef_CATEGORY = firebase.database().ref('ebooks/category/'+cat_split_session[x]+'/'+session_pdf_key);  
+ RemoveRef_CATEGORY.remove();
+ 
+}
+
+}
+
+
+
+
+
+
+
+  var ref=database.ref('ebooks');
+ 
+  var category_text=document.getElementById("category").value;
+ var fields = category_text.split(',');
+
+  var data={
+file_name: document.getElementById("file_name").value,
+description:document.getElementById("description_box").value,
+url:downloadURL,
+category_details:category_text
+  };
+  var myRef = ref.push();
+   var new_key=myRef.key;
+  myRef.set(data);
+
+ 
+ for(var i=0; i<fields.length; i++)
+ {
+     
+     var text_cat=fields[i];
+ var new_ref=database.ref('ebooks/category/'+text_cat+'/'+new_key);
+ var cat={
+    pdf_category:text_cat
+  };
+new_ref.set(cat);
+ }
+ 
+
+
+}
+	
+        </script>
+
+</body>
+</html>
